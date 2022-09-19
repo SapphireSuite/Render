@@ -6,6 +6,11 @@ namespace SA
 {
 	namespace DX12
 	{
-		
+		void RenderInterface::Create()
+		{
+		}
+		void RenderInterface::Destroy()
+		{
+		}
 	}
 }

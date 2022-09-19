@@ -6,6 +6,11 @@ namespace SA
 {
 	namespace GL
 	{
-		
+		void RenderInterface::Create()
+		{
+		}
+		void RenderInterface::Destroy()
+		{
+		}	
 	}
 }

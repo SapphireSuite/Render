@@ -11,7 +11,9 @@ namespace SA
 	{
 		class RenderInterface : public ARenderInterface
 		{
-
+		public:
+			void Create() override final;
+			void Destroy() override final;
 		};
 	}
 }

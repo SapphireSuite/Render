@@ -9,7 +9,9 @@ namespace SA
 {
 	class ARenderInterface
 	{
-
+	public:
+		virtual void Create() = 0;
+		virtual void Destroy() = 0;
 	};
 }
 

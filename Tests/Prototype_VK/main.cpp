@@ -3,6 +3,8 @@
 #include <SA/Collections/Debug>
 using namespace SA;
 
+#include <SA/Render/Vulkan/VkRenderInterface.hpp>
+
 int main()
 {
 //{ Init
@@ -17,6 +19,11 @@ int main()
 	logger.Register(fileStream);
 
 //}
+
+	VK::RenderInterface interface;
+	interface.Create();
+
+	interface.Destroy();
 
 	return 0;
 }
