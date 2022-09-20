@@ -3,20 +3,12 @@
 #include <SA/Collections/Debug>
 using namespace SA;
 
+#include <main_common.hpp>
+#include <SA/Render/DX12/D12RenderInterface.hpp>
+
 int main()
 {
-//{ Init
+	DX12::RenderInterface interface;
 
-	Logger logger;
-	SA::Debug::logger = &logger;
-
-	ConsoleLogStream cslStream;
-	logger.Register(cslStream);
-
-	FileLogStream fileStream;
-	logger.Register(fileStream);
-
-//}
-
-	return 0;
+	return main_common(&interface);
 }

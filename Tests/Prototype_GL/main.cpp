@@ -4,11 +4,11 @@
 using namespace SA;
 
 #include <main_common.hpp>
-#include <SA/Render/Vulkan/VkRenderInterface.hpp>
+#include <SA/Render/OpenGL/GLRenderInterface.hpp>
 
 int main()
 {
-	VK::RenderInterface interface;
+	GL::RenderInterface interface;
 
 	return main_common(&interface);
 }
