@@ -7,12 +7,23 @@
 
 #include <SA/Render/Base/ARenderInterface.hpp>
 
+struct IDXGIFactory4;
+
 namespace SA
 {
 	namespace DX12
 	{
 		class RenderInterface : public ARenderInterface
 		{
+		//{ Factory
+
+			IDXGIFactory4* mFactory = nullptr;
+
+			void CreateFactory();
+			void DestroyFactory();
+
+		//}
+		
 		public:
 			void Create() override final;
 			void Destroy() override final;

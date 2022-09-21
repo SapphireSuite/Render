@@ -62,7 +62,7 @@ option(SA_RENDER_DX12_OPT "Should compile DirectX12 wrapper" OFF)
 
 if(SA_RENDER_DX12_OPT)
 
-	#target_link_libraries(SA_Render PUBLIC d3d12.lib)
+	target_link_libraries(SA_Render PUBLIC d3d12.lib dxgi.lib)
 
 	target_compile_definitions(SA_Render PUBLIC SA_RENDER_DX12)
 	SA_TargetSources(TARGET SA_Render
