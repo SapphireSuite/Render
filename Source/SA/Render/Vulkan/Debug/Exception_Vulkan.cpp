@@ -6,16 +6,19 @@
 
 namespace SA
 {
-	Exception_Vulkan::Exception_Vulkan(
-		BaseInfos&& _infos,
-		VkResult _vkRes,
-		std::string&& _predStr,
-		std::wstring&& _details
-	) noexcept :
-		Exception(std::move(_infos),
-			_vkRes == VkResult::VK_SUCCESS,
-			ToWString(std::move(_predStr)) + L" == VkResult::VK_SUCCESS",
-			std::move(_details))
+	namespace VK
 	{
+		Exception_Vulkan::Exception_Vulkan(
+			BaseInfos&& _infos,
+			VkResult _vkRes,
+			std::string&& _predStr,
+			std::wstring&& _details
+		) noexcept :
+			Exception(std::move(_infos),
+				_vkRes == VkResult::VK_SUCCESS,
+				ToWString(std::move(_predStr)) + L" == VkResult::VK_SUCCESS",
+				std::move(_details))
+		{
+		}
 	}
 }
