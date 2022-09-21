@@ -79,11 +79,8 @@ option(SA_RENDER_OPENGL_OPT "Should compile OpenGL wrapper" OFF)
 
 if(SA_RENDER_OPENGL_OPT)
 
-	#include(FindOpenGL)
-	#FindOpenGL()
-
 	find_package(OpenGL REQUIRED)
-	target_link_libraries(SA_Render PUBLIC OpenGL::OpenGL)
+	target_link_libraries(SA_Render PUBLIC OpenGL::GL)
 
 	target_compile_definitions(SA_Render PUBLIC SA_RENDER_OPENGL)
 	SA_TargetSources(TARGET SA_Render
