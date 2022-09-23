@@ -16,20 +16,24 @@ SA_ConfigureProject(SA_Render)
 
 # Library
 
-add_library(SA_Render STATIC)
-SA_ConfigureTarget(TARGET SA_Render)
-SA_TargetSources(TARGET SA_Render
-	PUBLIC_FOLDER "Include/SA/Base"
-	PRIVATE_FOLDER "Source/SA/Base"
-	TOGGLE_INCLUDE_DIR OFF
+## Main
+add_library(SA_Render INTERFACE)
+SA_ConfigureTarget(SA_Render LINK INTERFACE)
+
+
+## Base
+add_library(SA_Render_Base STATIC)
+SA_ConfigureTarget(SA_Render_Base)
+SA_TargetSources(SA_Render_Base
+	PUBLIC_SRC_DIR "Include/SA/Render/Base"
+	PRIVATE_SRC_DIR "Source/SA/Render/Base"
 )
 
-## Manual include directory: custom target sources
-target_include_directories(SA_Render PUBLIC Include)
-target_include_directories(SA_Render PRIVATE Include/SA/Render)
-
 ### Link dependencies.
-target_link_libraries(SA_Render PUBLIC SA_Logger)
+target_link_libraries(SA_Render_Base PUBLIC SA_Logger SA_HI)
+
+### Link to main lib.
+target_link_libraries(SA_Render INTERFACE SA_Render_Base)
 
 
 
@@ -38,6 +42,9 @@ target_link_libraries(SA_Render PUBLIC SA_Logger)
 ## Add SA_Render's tests to build tree.
 option(SA_RENDER_BUILD_TESTS_OPT "Should build SA_Render tests" OFF)
 
+## Add SA_Render's sample common to build tree.
+option(SA_RENDER_SCOMMON_OPT "Should build SA_Render sample common" OFF)
+
 
 ## Vulkan
 option(SA_RENDER_VULKAN_OPT "Should compile Vulkan wrapper" ON)
@@ -45,14 +52,23 @@ option(SA_RENDER_VULKAN_OPT "Should compile Vulkan wrapper" ON)
 if(SA_RENDER_VULKAN_OPT)
 
 	find_package(Vulkan REQUIRED FATAL_ERROR)
-	target_link_libraries(SA_Render PUBLIC Vulkan::Vulkan)
 
-	target_compile_definitions(SA_Render PUBLIC SA_RENDER_VULKAN)
-	SA_TargetSources(TARGET SA_Render
-		PUBLIC_FOLDER "Include/SA/Render/Vulkan"
-		PRIVATE_FOLDER "Source/SA/Render/Vulkan"
-		TOGGLE_INCLUDE_DIR OFF
+	add_library(SA_Render_Vulkan STATIC)
+	SA_ConfigureTarget(SA_Render_Vulkan)
+	SA_TargetSources(SA_Render_Vulkan
+		PUBLIC_SRC_DIR "Include/SA/Render/Vulkan"
+		PUBLIC_INCL_DIR "OFF"
+		PRIVATE_SRC_DIR "Source/SA/Render/Vulkan"
 	)
+
+	# Set vulkan to public for easier vulkan struct wrapping.
+	target_link_libraries(SA_Render_Vulkan
+		PUBLIC SA_Render_Base Vulkan::Vulkan
+		PRIVATE 
+	)
+
+	### Link to main lib.
+	target_link_libraries(SA_Render INTERFACE SA_Render_Vulkan)
 
 endif()
 
@@ -62,14 +78,21 @@ option(SA_RENDER_DX12_OPT "Should compile DirectX12 wrapper" OFF)
 
 if(SA_RENDER_DX12_OPT)
 
-	target_link_libraries(SA_Render PUBLIC d3d12.lib dxgi.lib)
-
-	target_compile_definitions(SA_Render PUBLIC SA_RENDER_DX12)
-	SA_TargetSources(TARGET SA_Render
-		PUBLIC_FOLDER "Include/SA/Render/DX12"
-		PRIVATE_FOLDER "Source/SA/Render/DX12"
-		TOGGLE_INCLUDE_DIR OFF
+	add_library(SA_Render_DX12 STATIC)
+	SA_ConfigureTarget(SA_Render_DX12)
+	SA_TargetSources(SA_Render_DX12
+		PUBLIC_SRC_DIR "Include/SA/Render/DX12"
+		PUBLIC_INCL_DIR "OFF"
+		PRIVATE_SRC_DIR "Source/SA/Render/DX12"
 	)
+
+	target_link_libraries(SA_Render_DX12
+		PUBLIC SA_Render_Base
+		PRIVATE d3d12.lib dxgi.lib
+	)
+
+	### Link to main lib.
+	target_link_libraries(SA_Render INTERFACE SA_Render_DX12)
 
 endif()
 
@@ -80,14 +103,22 @@ option(SA_RENDER_OPENGL_OPT "Should compile OpenGL wrapper" OFF)
 if(SA_RENDER_OPENGL_OPT)
 
 	find_package(OpenGL REQUIRED)
-	target_link_libraries(SA_Render PUBLIC OpenGL::GL)
 
-	target_compile_definitions(SA_Render PUBLIC SA_RENDER_OPENGL)
-	SA_TargetSources(TARGET SA_Render
-		PUBLIC_FOLDER "Include/SA/Render/OpenGL"
-		PRIVATE_FOLDER "Source/SA/Render/OpenGL"
-		TOGGLE_INCLUDE_DIR OFF
+	add_library(SA_Render_OpenGL STATIC)
+	SA_ConfigureTarget(SA_Render_OpenGL)
+	SA_TargetSources(SA_Render_OpenGL
+		PUBLIC_SRC_DIR "Include/SA/Render/OpenGL"
+		PUBLIC_INCL_DIR "OFF"
+		PRIVATE_SRC_DIR "Source/SA/Render/OpenGL"
 	)
+
+	target_link_libraries(SA_Render_OpenGL
+		PUBLIC SA_Render_Base
+		PRIVATE OpenGL::GL
+	)
+
+	### Link to main lib.
+	target_link_libraries(SA_Render INTERFACE SA_Render_OpenGL)
 
 endif()
 
@@ -97,7 +128,7 @@ endif()
 
 add_subdirectory(ThirdParty)
 
-if(SA_RENDER_BUILD_TESTS_OPT)
+if(SA_RENDER_BUILD_TESTS_OPT OR SA_RENDER_SCOMMON_OPT)
 
 	### Enable testing for this directory and below.
 	enable_testing()

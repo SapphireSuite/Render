@@ -1,10 +1,8 @@
 // Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
-#include <Vulkan/Debug/VkValidationLayers.hpp>
+#include "VkValidationLayers.hpp"
 
 #include <cstring> // std::strcmp
-
-#include <SA/Collections/Debug>
 
 #if SA_VK_VALIDATION_LAYERS
 

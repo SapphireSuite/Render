@@ -3,12 +3,37 @@
 #include <SA/Collections/Debug>
 using namespace SA;
 
-#include <main_common.hpp>
-#include <SA/Render/Vulkan/VkRenderInterface.hpp>
+#include <SCommon/WindowRenderApplication.hpp>
+
+class SampleApp : public SCommon::WindowRenderApplication
+{
+protected:
+	void Init() override final
+	{
+		SCommon::WindowRenderApplication::Init();
+	}
+
+	void UnInit() override final
+	{
+		SCommon::WindowRenderApplication::UnInit();
+	}
+
+	void Loop() override final
+	{
+		SCommon::WindowRenderApplication::Loop();
+	}
+
+	void Update() override final
+	{
+		SCommon::WindowRenderApplication::Update();
+	}
+};
 
 int main()
 {
-	VK::RenderInterface interface;
+	SA::Debug::InitDefaultLogger();
 
-	return main_common(&interface);
+	SampleApp app;
+
+	return app.CreateAndRun<SCommon::SelectedWindowInterface, SA::VK::RenderInterface>();
 }

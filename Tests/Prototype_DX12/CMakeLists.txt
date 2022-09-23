@@ -10,7 +10,7 @@ add_executable(SA_RenderProto_DX12 "main.cpp")
 # Dependencies
 
 ### Add library dependencies.
-target_link_libraries(SA_RenderProto_DX12 PRIVATE SA_RenderProto_Common)
+target_link_libraries(SA_RenderProto_DX12 PRIVATE SA_Render_SCommon)
 
 
 

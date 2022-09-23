@@ -1,10 +1,8 @@
 // Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
-#include <Vulkan/VkRenderInterface.hpp>
+#include "VkRenderInterface.hpp"
 
-#include <SA/Collections/Debug>
-
-#include <Vulkan/Debug/VkValidationLayers.hpp>
+#include "Debug/VkValidationLayers.hpp"
 
 namespace SA
 {
@@ -12,6 +10,8 @@ namespace SA
 	{
 		void RenderInterface::Create()
 		{
+			ARenderInterface::Create();
+
 #if SA_VK_VALIDATION_LAYERS
 
 			SA_ASSERT(Default, SA/Render/Vulkan, ValidationLayers::CheckValidationSupport(), L"Validation Layers not supported!");
@@ -25,9 +25,18 @@ namespace SA
 
 		void RenderInterface::Destroy()
 		{
+			ARenderInterface::Destroy();
+
 			mInstance.Destroy();
 
 			SA_LOG(L"Render Interface destroyed.", Infos, SA/Render/Vulkan);
+		}
+
+		void RenderInterface::Clear()
+		{
+			ARenderInterface::Clear();
+
+			SA_LOG(L"Render Interface cleared.", Infos, SA/Render/Vulkan);
 		}
 	}
 }

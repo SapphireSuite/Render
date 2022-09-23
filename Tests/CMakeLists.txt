@@ -2,26 +2,26 @@
 
 # Entrypoints
 
-add_subdirectory(Prototype_Common)
+add_subdirectory(SCommon)
 
-if(SA_RENDER_VULKAN_OPT)
+if(SA_RENDER_BUILD_TESTS_OPT)
 
-	add_subdirectory(Prototype_VK)
+	if(SA_RENDER_VULKAN_OPT)
 
-endif()
+		add_subdirectory(Prototype_VK)
 
-if(SA_RENDER_OPENGL_OPT)
+	endif()
 
-	add_subdirectory(Prototype_GL)
+	if(SA_RENDER_OPENGL_OPT)
 
-endif()
+		add_subdirectory(Prototype_GL)
 
-if(SA_RENDER_DX12_OPT)
+	endif()
 
-	add_subdirectory(Prototype_DX12)
+	if(SA_RENDER_DX12_OPT)
 
-endif()
+		add_subdirectory(Prototype_DX12)
 
-add_subdirectory(Prototype_All)
+	endif()
 
-add_subdirectory(UnitTests)
+endif(SA_RENDER_BUILD_TESTS_OPT)

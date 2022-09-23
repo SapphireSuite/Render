@@ -27,6 +27,8 @@ namespace SA
 		public:
 			void Create() override final;
 			void Destroy() override final;
+
+			void Clear() override final;
 		};
 	}
 }

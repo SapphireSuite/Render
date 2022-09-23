@@ -5,13 +5,20 @@
 #ifndef SA_RENDER_ARENDER_INTERFACE_GUARD
 #define SA_RENDER_ARENDER_INTERFACE_GUARD
 
+#include <SA/HI/Interface.hpp>
+
 namespace SA
 {
-	class ARenderInterface
+	class ARenderInterface : private HI::Interface
 	{
+	protected:
+		using HI::Interface::CheckCreated;
+
 	public:
-		virtual void Create() = 0;
-		virtual void Destroy() = 0;
+		void Create() override;
+		void Destroy() override;
+
+		void Clear() override;
 	};
 }
 

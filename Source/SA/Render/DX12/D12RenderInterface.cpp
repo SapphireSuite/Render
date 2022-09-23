@@ -1,11 +1,11 @@
 // Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
-#include <DX12/D12RenderInterface.hpp>
+#include <D12RenderInterface.hpp>
 
 #include <d3d12.h>
 #include <dxgi1_6.h>
 
-#include <DX12/Debug/Debug.hpp>
+#include <Debug/Debug.hpp>
 
 namespace SA
 {
@@ -13,6 +13,8 @@ namespace SA
 	{
 		void RenderInterface::Create()
 		{
+			ARenderInterface::Create();
+
 			CreateFactory();
 
 			SA_LOG(L"Render Interface created.", Infos, SA/Render/DX12);
@@ -20,9 +22,18 @@ namespace SA
 
 		void RenderInterface::Destroy()
 		{
+			ARenderInterface::Destroy();
+
 			DestroyFactory();
 
 			SA_LOG(L"Render Interface destroyed.", Infos, SA/Render/DX12);
+		}
+
+		void RenderInterface::Clear()
+		{
+			ARenderInterface::Clear();
+
+			SA_LOG(L"Render Interface cleared.", Infos, SA/Render/DX12);
 		}
 
 

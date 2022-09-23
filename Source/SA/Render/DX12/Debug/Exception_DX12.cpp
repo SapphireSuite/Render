@@ -1,6 +1,6 @@
 // Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
-#include <DX12/Debug/Exception_DX12.hpp>
+#include <Debug/Exception_DX12.hpp>
 
 namespace SA
 {

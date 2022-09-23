@@ -1,8 +1,8 @@
 // Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
-#include <Vulkan/VkInstance.hpp>
+#include <VkInstance.hpp>
 
-#include <Vulkan/Debug/Debug.hpp>
+#include "Debug/VkValidationLayers.hpp"
 
 namespace SA::VK
 {
@@ -32,7 +32,7 @@ namespace SA::VK
 		instanceInfos.enabledLayerCount = 0;
 		instanceInfos.ppEnabledLayerNames = nullptr;
 
-		instanceInfos.enabledExtensionCount = _extensions.size();
+		instanceInfos.enabledExtensionCount = static_cast<uint32_t>(_extensions.size());
 		instanceInfos.ppEnabledExtensionNames = _extensions.data();
 
 #if SA_VK_VALIDATION_LAYERS

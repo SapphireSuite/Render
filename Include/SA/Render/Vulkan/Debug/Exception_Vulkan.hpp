@@ -5,9 +5,9 @@
 #ifndef SAPPHIRE_RENDER_EXCEPTION_VULKAN_GUARD
 #define SAPPHIRE_RENDER_EXCEPTION_VULKAN_GUARD
 
-#include <vulkan/vulkan.h>
-
 #include <SA/Logger/Exceptions/Exception.hpp>
+
+enum VkResult;
 
 namespace SA
 {

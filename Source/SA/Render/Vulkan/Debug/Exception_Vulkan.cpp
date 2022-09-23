@@ -1,6 +1,8 @@
 // Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
-#include <Vulkan/Debug/Exception_Vulkan.hpp>
+#include <Debug/Exception_Vulkan.hpp>
+
+#include <VulkanApi.hpp>
 
 #include <SA/Logger/Misc/ToString.hpp>
 
