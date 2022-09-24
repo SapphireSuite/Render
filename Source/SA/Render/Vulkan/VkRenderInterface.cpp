@@ -56,5 +56,28 @@ namespace SA
 
 			SA_LOG(L"Render Interface cleared.", Infos, SA/Render/Vulkan);
 		}
+
+
+#if SA_WINDOWING_IMPL
+
+		AWindowSurface* RenderInterface::CreateWindowSurface(AWindow* _win)
+		{
+			CheckCreated();
+
+			WindowSurface* winSurface = mWindowSurfaces.Emplace();
+
+			winSurface->Create(_win, mInstance);
+
+			return winSurface;
+		}
+
+		void RenderInterface::DestroyWindowSurface(AWindowSurface* _winSurface)
+		{
+			CheckCreated();
+
+			mWindowSurfaces.Erase(_winSurface, WindowSurfaceDestroyer{ mInstance });
+		}
+
+#endif
 	}
 }

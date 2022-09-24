@@ -6,6 +6,9 @@
 #define SA_RENDER_ARENDER_INTERFACE_GUARD
 
 #include <SA/HI/Interface.hpp>
+#include <SA/HI/InterfaceList.hpp>
+
+#include "Surface/AWindowSurface.hpp"
 
 namespace SA
 {
@@ -23,6 +26,13 @@ namespace SA
 		void Destroy() override;
 
 		void Clear() override;
+
+#if SA_WINDOWING_IMPL
+
+		virtual AWindowSurface* CreateWindowSurface(AWindow* _win) = 0;
+		virtual void DestroyWindowSurface(AWindowSurface* _winSurface) = 0;
+
+#endif
 	};
 }
 

@@ -8,13 +8,19 @@ using namespace SA;
 class SampleApp : public SCommon::WindowRenderApplication
 {
 protected:
+	AWindowSurface* mWinSurf = nullptr;
+
 	void Init() override final
 	{
 		SCommon::WindowRenderApplication::Init();
+
+		mWinSurf = mRenderIntf->CreateWindowSurface(mWindow);
 	}
 
 	void UnInit() override final
 	{
+		mRenderIntf->DestroyWindowSurface(mWinSurf);
+
 		SCommon::WindowRenderApplication::UnInit();
 	}
 
