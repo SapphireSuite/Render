@@ -11,9 +11,9 @@ namespace SA
 {
 	namespace DX12
 	{
-		void RenderInterface::Create()
+		void RenderInterface::Create(AWindowInterface* _win_intf)
 		{
-			ARenderInterface::Create();
+			ARenderInterface::Create(_win_intf);
 
 			CreateFactory();
 

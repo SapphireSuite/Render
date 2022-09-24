@@ -9,13 +9,17 @@
 
 namespace SA
 {
+	class AWindowInterface;
+
 	class ARenderInterface : private HI::Interface
 	{
+		using HI::Interface::Create;
+
 	protected:
 		using HI::Interface::CheckCreated;
 
 	public:
-		void Create() override;
+		virtual void Create(AWindowInterface* _win_intf = nullptr);
 		void Destroy() override;
 
 		void Clear() override;

@@ -39,7 +39,7 @@ namespace SA
 				win_intf.Create();
 
 				RenderInterfaceT render_intf;
-				render_intf.Create(/*&win_intf*/);
+				render_intf.Create(&win_intf);
 
 				const int res = Run(&win_intf, &render_intf);
 

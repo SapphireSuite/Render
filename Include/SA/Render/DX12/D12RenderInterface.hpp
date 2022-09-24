@@ -25,7 +25,7 @@ namespace SA
 		//}
 		
 		public:
-			void Create() override final;
+			void Create(AWindowInterface* _win_intf = nullptr) override final;
 			void Destroy() override final;
 
 			void Clear() override final;

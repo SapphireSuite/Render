@@ -128,6 +128,12 @@ endif()
 
 add_subdirectory(ThirdParty)
 
+### SA_Windowing target already in build-tree: add link for custom implementations.
+### Must be done after ThirdParty include in case of SA_Windowing module fetching.
+if(TARGET SA_Windowing)
+	target_link_libraries(SA_Render_Base PUBLIC SA_Windowing)
+endif()
+
 if(SA_RENDER_BUILD_TESTS_OPT OR SA_RENDER_SCOMMON_OPT)
 
 	### Enable testing for this directory and below.

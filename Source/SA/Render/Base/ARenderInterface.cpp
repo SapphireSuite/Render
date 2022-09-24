@@ -4,9 +4,11 @@
 
 namespace SA
 {
-	void ARenderInterface::Create()
+	void ARenderInterface::Create(AWindowInterface* _win_intf)
 	{
 		HI::Interface::Create();
+
+		(void)_win_intf;
 	}
 	
 	void ARenderInterface::Destroy()

@@ -4,13 +4,19 @@
 
 #include "Debug/VkValidationLayers.hpp"
 
+#if SA_WINDOWING_IMPL
+
+#include <SA/Windowing/Base/AWindowInterface.hpp>
+
+#endif // SA_WINDOWING_IMPL
+
 namespace SA
 {
 	namespace VK
 	{
-		void RenderInterface::Create()
+		void RenderInterface::Create(AWindowInterface* _win_intf)
 		{
-			ARenderInterface::Create();
+			ARenderInterface::Create(_win_intf);
 
 #if SA_VK_VALIDATION_LAYERS
 
@@ -18,7 +24,19 @@ namespace SA
 
 #endif
 
-			mInstance.Create();
+			std::vector<const char*> extensions;
+
+		#if SA_WINDOWING_IMPL
+
+			if (_win_intf)
+				_win_intf->VkQueryRequiredExtensions(extensions);
+		#else
+
+			(void)_win_intf;
+
+		#endif // SA_WINDOWING_IMPL
+
+			mInstance.Create(std::move(extensions));
 
 			SA_LOG(L"Render Interface created.", Infos, SA/Render/Vulkan);
 		}

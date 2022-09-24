@@ -8,9 +8,9 @@ namespace SA
 {
 	namespace GL
 	{
-		void RenderInterface::Create()
+		void RenderInterface::Create(AWindowInterface* _win_intf)
 		{
-			ARenderInterface::Create();
+			ARenderInterface::Create(_win_intf);
 
 			SA_LOG(L"Render Interface created.", Infos, SA/Render/OpenGL);
 		}
