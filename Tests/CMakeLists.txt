@@ -6,6 +6,9 @@ add_subdirectory(SCommon)
 
 if(SA_RENDER_BUILD_TESTS_OPT)
 
+	## Prototypes
+	add_subdirectory(Prototype)
+
 	if(SA_RENDER_VULKAN_OPT)
 
 		add_subdirectory(Prototype_VK)
