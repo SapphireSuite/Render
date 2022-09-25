@@ -19,6 +19,8 @@ namespace SA
 		public:
 			void Create();
 			void Destroy();
+
+			IDXGIFactory6* operator->() const;
 		};
 	}
 }

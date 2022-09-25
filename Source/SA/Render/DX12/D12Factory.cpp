@@ -33,17 +33,20 @@ namespace SA
 
 			SA_DX12_ASSERT(CreateDXGIFactory2(dxgiFactoryFlags, IID_PPV_ARGS(&mHandle)), L"Failed to create DX12 factory.");
 
-			SA_LOG(L"Factory [" << mHandle << "] created.", Infos, SA/Render/DX12);
+			SA_DX12_CREATE_LOG(Factory, mHandle)
 		}
 		
 		void Factory::Destroy()
 		{
-			const uint64_t addr = reinterpret_cast<uint64_t>(mHandle);
+			SA_DX12_POST_DESTROY_LOG(Factory, mHandle)
 
 			mHandle->Release();
 			mHandle = nullptr;
+		}
 
-			SA_LOG(L"Factory [" << addr << "] destroyed.", Infos, SA/Render/DX12);
+		IDXGIFactory6* Factory::operator->() const
+		{
+			return mHandle;
 		}
 	}
 }
