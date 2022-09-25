@@ -7,7 +7,7 @@
 
 #include <SA/Render/Base/ARenderInterface.hpp>
 
-struct IDXGIFactory4;
+#include "D12Factory.hpp"
 
 namespace SA
 {
@@ -15,20 +15,20 @@ namespace SA
 	{
 		class RenderInterface : public ARenderInterface
 		{
-		//{ Factory
-
-			IDXGIFactory4* mFactory = nullptr;
-
-			void CreateFactory();
-			void DestroyFactory();
-
-		//}
+			Factory mFactory;
 		
 		public:
 			void Create(AWindowInterface* _win_intf = nullptr) override final;
 			void Destroy() override final;
 
 			void Clear() override final;
+
+#if SA_WINDOWING_IMPL
+
+			AWindowSurface* CreateWindowSurface(AWindow* _win) override final;
+			void DestroyWindowSurface(AWindowSurface* _winSurface) override final;
+
+#endif
 		};
 	}
 }

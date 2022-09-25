@@ -1,0 +1,25 @@
+// Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
+
+#pragma once
+
+#ifndef SAPPHIRE_RENDER_DX12_FACTORY_GUARD
+#define SAPPHIRE_RENDER_DX12_FACTORY_GUARD
+
+struct IDXGIFactory6;
+
+namespace SA
+{
+	namespace DX12
+	{
+		class Factory
+		{
+			IDXGIFactory6* mHandle = nullptr;
+
+		public:
+			void Create();
+			void Destroy();
+		};
+	}
+}
+
+#endif	// SAPPHIRE_RENDER_DX12_FACTORY_GUARD
