@@ -61,9 +61,9 @@ if(SA_RENDER_VULKAN_OPT)
 		PRIVATE_SRC_DIR "Source/SA/Render/Vulkan"
 	)
 
-	# Set vulkan to public for easier vulkan struct wrapping.
 	target_link_libraries(SA_Render_Vulkan
-		PUBLIC SA_Render_Base Vulkan::Vulkan
+		PUBLIC SA_Render_Base
+		PUBLIC Vulkan::Vulkan # Set to public for easier wrapping.
 		PRIVATE 
 	)
 
@@ -88,7 +88,8 @@ if(SA_RENDER_DX12_OPT)
 
 	target_link_libraries(SA_Render_DX12
 		PUBLIC SA_Render_Base
-		PRIVATE d3d12.lib dxgi.lib
+		PUBLIC d3d12.lib dxgi.lib # Set to public for easier wrapping.
+		PRIVATE
 	)
 
 	### Link to main lib.

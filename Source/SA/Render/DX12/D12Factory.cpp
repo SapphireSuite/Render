@@ -2,9 +2,6 @@
 
 #include "D12Factory.hpp"
 
-#include <d3d12.h>
-#include <dxgi1_6.h>
-
 #include "Debug/Debug.hpp"
 
 namespace SA

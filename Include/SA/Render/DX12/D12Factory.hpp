@@ -5,7 +5,8 @@
 #ifndef SAPPHIRE_RENDER_DX12_FACTORY_GUARD
 #define SAPPHIRE_RENDER_DX12_FACTORY_GUARD
 
-struct IDXGIFactory6;
+#include <d3d12.h>
+#include <dxgi1_6.h>
 
 namespace SA
 {
