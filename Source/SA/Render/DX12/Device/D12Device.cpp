@@ -49,10 +49,13 @@ namespace SA
 			return SUCCEEDED(D3D12CreateDevice(_adapter.Get(), D3D_FEATURE_LEVEL_11_0, _uuidof(ID3D12Device), nullptr));
 		}
 
-		bool IsPhysicalDeviceSuitable(const PhysicalDevice& _adapter, DeviceInfo& _info)
+		bool IsPhysicalDeviceSuitable(const PhysicalDevice& _adapter, const RenderDeviceRequirements& _reqs, DeviceInfo& _info)
 		{
 			DXGI_ADAPTER_DESC1 desc;
 			_adapter->GetDesc1(&desc);
+
+			if (_reqs.bUseWrapAdapter ^ bool(desc.Flags & DXGI_ADAPTER_FLAG_SOFTWARE))
+				return false;
 
 			if (!CheckDX12Support(_adapter))
 				return false;
@@ -68,7 +71,7 @@ namespace SA
 			return true;
 		}
 
-		std::vector<DeviceInfo> Device::QueryDevices(const Factory& _factory)
+		std::vector<DeviceInfo> Device::QueryDevices(const Factory& _factory, const RenderDeviceRequirements& _reqs)
 		{
 			std::vector<DeviceInfo> result;
 			result.reserve(10);
@@ -76,14 +79,26 @@ namespace SA
 			UINT index = 0;
 			PhysicalDevice adapter = nullptr;
 
-			while (SUCCEEDED(_factory->EnumAdapterByGpuPreference(index, DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE, IID_PPV_ARGS(&adapter))))
+			if (_reqs.bUseWrapAdapter)
 			{
+				SA_DX12_ASSERT(_factory->EnumWarpAdapter(IID_PPV_ARGS(&adapter)), L"Query wrap adapter failed!");
+				
 				DeviceInfo info;
 
-				if (IsPhysicalDeviceSuitable(adapter, info))
+				if (IsPhysicalDeviceSuitable(adapter, _reqs, info))
 					result.emplace_back(std::move(info));
+			}
+			else
+			{
+				while (SUCCEEDED(_factory->EnumAdapterByGpuPreference(index, DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE, IID_PPV_ARGS(&adapter))))
+				{
+					DeviceInfo info;
 
-				++index;
+					if (IsPhysicalDeviceSuitable(adapter, _reqs, info))
+						result.emplace_back(std::move(info));
+
+					++index;
+				}
 			}
 
 			SA_WARN(!result.empty(), SA/Render/DX12, L"No suitable graphic device found!");

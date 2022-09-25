@@ -35,7 +35,7 @@ namespace SA
 
 		//{ Device
 
-			HI::PolymorphicVector<ARenderDeviceInfo> QueryDevices() override final;
+			HI::PolymorphicVector<ARenderDeviceInfo> QueryDevices(const RenderDeviceRequirements& _reqs = RenderDeviceRequirements()) override final;
 			ARenderDevice* CreateDevice(const ARenderDeviceInfo* _info) override final;
 			void DestroyDevice(ARenderDevice* _device) override final;
 

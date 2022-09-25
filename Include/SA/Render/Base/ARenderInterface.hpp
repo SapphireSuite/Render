@@ -39,7 +39,7 @@ namespace SA
 
 	//{ Device
 
-		virtual HI::PolymorphicVector<ARenderDeviceInfo> QueryDevices() = 0;
+		virtual HI::PolymorphicVector<ARenderDeviceInfo> QueryDevices(const RenderDeviceRequirements& _reqs = RenderDeviceRequirements()) = 0;
 		virtual ARenderDevice* CreateDevice(const ARenderDeviceInfo* _info) = 0;
 		virtual void DestroyDevice(ARenderDevice* _device) = 0;
 

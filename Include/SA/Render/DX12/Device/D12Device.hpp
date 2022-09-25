@@ -29,7 +29,7 @@ namespace SA
 			void Create(const DeviceInfo& _info);
 			void Destroy() override;
 
-			static std::vector<DeviceInfo> QueryDevices(const Factory& _factory);
+			static std::vector<DeviceInfo> QueryDevices(const Factory& _factory, const RenderDeviceRequirements& _reqs = RenderDeviceRequirements());
 		};
 	}
 }

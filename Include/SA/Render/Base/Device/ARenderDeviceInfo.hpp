@@ -8,6 +8,8 @@
 #include <cstdint>
 #include <string>
 
+#include "RenderDeviceRequirements.hpp"
+
 namespace SA
 {
 	struct ARenderDeviceInfo

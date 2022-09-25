@@ -50,11 +50,11 @@ namespace SA
 
 	//{ Device
 
-		HI::PolymorphicVector<ARenderDeviceInfo> RenderInterface::QueryDevices()
+		HI::PolymorphicVector<ARenderDeviceInfo> RenderInterface::QueryDevices(const RenderDeviceRequirements& _reqs)
 		{
 			CheckCreated();
 
-			return Device::QueryDevices(mFactory);
+			return Device::QueryDevices(mFactory, _reqs);
 		}
 
 		ARenderDevice* RenderInterface::CreateDevice(const ARenderDeviceInfo* _info)
