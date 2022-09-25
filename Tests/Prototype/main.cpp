@@ -8,13 +8,29 @@ using namespace SA;
 class SampleApp : public SCommon::WindowRenderApplication
 {
 protected:
+	ARenderDevice* mDevice = nullptr;
+
+	void CreateDevice()
+	{
+		const auto deviceInfo = mRenderIntf->QueryDevices();
+
+		for (const auto& info : deviceInfo)
+			SA_LOG(L"Device ID [" << info->ID << "] Vendor ID [" << info->vendorID << "] name [" << info->name << "]");
+
+		mDevice = mRenderIntf->CreateDevice(deviceInfo[0]);
+	}
+
 	void Init() override final
 	{
 		SCommon::WindowRenderApplication::Init();
+
+		CreateDevice();
 	}
 
 	void UnInit() override final
 	{
+		mRenderIntf->DestroyDevice(mDevice);
+
 		SCommon::WindowRenderApplication::UnInit();
 	}
 
@@ -35,5 +51,5 @@ int main()
 
 	SampleApp app;
 
-	return app.CreateAndRun<SCommon::SelectedWindowInterface, SCommon::SelectedRenderInterface>();
+	return app.CreateAndRun<SCommon::SelectedWindowInterface, SA::VK::RenderInterface>();
 }

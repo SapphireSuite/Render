@@ -8,6 +8,7 @@
 #include <SA/Render/Base/ARenderInterface.hpp>
 
 #include "D12Factory.hpp"
+#include "Device/D12Device.hpp"
 
 namespace SA
 {
@@ -17,6 +18,8 @@ namespace SA
 		{
 			Factory mFactory;
 		
+			HI::InterfaceList<Device> mDevices;
+
 		public:
 			void Create(AWindowInterface* _win_intf = nullptr) override final;
 			void Destroy() override final;
@@ -29,6 +32,14 @@ namespace SA
 			void DestroyWindowSurface(AWindowSurface* _winSurface) override final;
 
 #endif
+
+		//{ Device
+
+			HI::PolymorphicVector<ARenderDeviceInfo> QueryDevices() override final;
+			ARenderDevice* CreateDevice(const ARenderDeviceInfo* _info) override final;
+			void DestroyDevice(ARenderDevice* _device) override final;
+
+		//}
 		};
 	}
 }

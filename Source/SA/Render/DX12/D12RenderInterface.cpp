@@ -33,6 +33,7 @@ namespace SA
 			SA_LOG(L"Render Interface cleared.", Infos, SA/Render/DX12);
 		}
 
+
 #if SA_WINDOWING_IMPL
 
 		AWindowSurface* RenderInterface::CreateWindowSurface(AWindow* _win)
@@ -45,5 +46,35 @@ namespace SA
 		}
 
 #endif
+
+
+	//{ Device
+
+		HI::PolymorphicVector<ARenderDeviceInfo> RenderInterface::QueryDevices()
+		{
+			CheckCreated();
+
+			return Device::QueryDevices(mFactory);
+		}
+
+		ARenderDevice* RenderInterface::CreateDevice(const ARenderDeviceInfo* _info)
+		{
+			CheckCreated();
+
+			Device* const device = mDevices.Emplace();
+
+			device->Create(*dynamic_cast<const DeviceInfo*>(_info));
+
+			return device;
+		}
+
+		void RenderInterface::DestroyDevice(ARenderDevice* _device)
+		{
+			CheckCreated();
+
+			mDevices.Erase(_device);
+		}
+
+	//}
 	}
 }
