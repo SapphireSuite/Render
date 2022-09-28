@@ -39,6 +39,16 @@ target_link_libraries(SA_Render INTERFACE SA_Render_Base)
 
 # Options
 
+## Validation layers
+option(SA_RENDER_VALIDATION_LAYER_RELEASE_OPT "Enable render validation layers in release" OFF)
+
+if(SA_RENDER_VALIDATION_LAYER_RELEASE_OPT)
+
+	target_compile_definitions(SA_Render_Base PUBLIC SA_RENDER_VALIDATION_LAYER_RELEASE=1)
+
+endif()
+
+
 ## Add SA_Render's tests to build tree.
 option(SA_RENDER_BUILD_TESTS_OPT "Should build SA_Render tests" OFF)
 
