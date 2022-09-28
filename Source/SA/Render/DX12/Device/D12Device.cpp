@@ -20,6 +20,8 @@ namespace SA
 			SA_DX12_ASSERT(D3D12CreateDevice(mPhysicalDevice.Get(), D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&mLogicalDevice)),
 				L"Failed to create logical device!")
 
+			SetDebugName(mLogicalDevice, "SA:: Device {" + _info.name + "} [" + SA::ToString(_info.ID) + "]");
+
 #if SA_DX12_VALIDATION_LAYERS
 
 			ID3D12InfoQueue* infoQueue = nullptr;

@@ -8,6 +8,7 @@
 #include <SA/Collections/Debug>
 
 #include "Exception_DX12.hpp"
+#include "SetDebugName.hpp"
 
 #define SA_DX12_VALIDATION_LAYERS (SA_DEBUG || SA_RENDER_VALIDATION_LAYER_RELEASE)
 
