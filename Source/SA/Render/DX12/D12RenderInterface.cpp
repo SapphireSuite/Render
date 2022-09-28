@@ -3,6 +3,7 @@
 #include <D12RenderInterface.hpp>
 
 #include <Debug/Debug.hpp>
+#include "Debug/D12ValidationLayers.hpp"
 
 namespace SA
 {
@@ -12,7 +13,7 @@ namespace SA
 		{
 			ARenderInterface::Create(_win_intf);
 
-			mValidationLayers.Create();
+			ValidationLayers::Initialize();
 
 			mFactory.Create();
 
@@ -25,7 +26,7 @@ namespace SA
 
 			mFactory.Destroy();
 
-			mValidationLayers.Destroy();
+			ValidationLayers::Uninitialize();
 
 			SA_LOG(L"Render Interface destroyed.", Infos, SA/Render/DX12);
 		}

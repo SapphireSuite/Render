@@ -1,10 +1,11 @@
 // Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
-#include "Device/D12Device.hpp"
+#include <Device/D12Device.hpp>
 
-#include "Debug/Debug.hpp"
+#include <Debug/Debug.hpp>
 
 #include "D12Factory.hpp"
+#include "../Debug/D12ValidationLayers.hpp"
 
 namespace SA
 {
@@ -18,6 +19,23 @@ namespace SA
 
 			SA_DX12_ASSERT(D3D12CreateDevice(mPhysicalDevice.Get(), D3D_FEATURE_LEVEL_11_0, IID_PPV_ARGS(&mLogicalDevice)),
 				L"Failed to create logical device!")
+
+#if SA_DX12_VALIDATION_LAYERS
+
+			ID3D12InfoQueue* infoQueue = nullptr;
+
+			if (mLogicalDevice->QueryInterface(IID_PPV_ARGS(&infoQueue)) == S_OK)
+			{
+				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
+				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);
+				infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);
+
+				infoQueue->Release();
+			}
+			else
+				SA_LOG(L"Device query info queue to enable validation layers failed.", Error, SA/Render/DX12);
+
+#endif // SA_DX12_VALIDATION_LAYERS
 
 			SA_DX12_CREATE_DETS_LOG(Device, mLogicalDevice, L"Name: " << _info.name << "\tID: " << _info.ID << "\tVendorID: " << _info.vendorID);
 		}

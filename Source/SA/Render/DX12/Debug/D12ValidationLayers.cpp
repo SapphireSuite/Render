@@ -1,31 +1,43 @@
 // Copyright (c) 2022 Sapphire's Suite. All Rights Reserved.
 
-#include <Debug/D12ValidationLayers.hpp>
+#include "D12ValidationLayers.hpp"
 
-#if SA_DX12_VALIDATION_LAYERS
+#include <d3d12.h>
+
+#include <Debug/Debug.hpp>
 
 namespace SA
 {
 	namespace DX12
 	{
-		void ValidationLayers::Create()
+		void ValidationLayers::Initialize()
 		{
-			SA_DX12_ASSERT(D3D12GetDebugInterface(IID_PPV_ARGS(&mDebugController)), L"Failed to query debug interface ID3D12Debug");
+#if SA_DX12_VALIDATION_LAYERS
 
-			mDebugController->EnableDebugLayer();
-			mDebugController->SetEnableGPUBasedValidation(true);
+			ID3D12Debug1* debugController = nullptr;
 
-			SA_LOG(L"Validation layer enabled.", Infos, SA/Render/DX12);
+			if (D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)) == S_OK)
+			{
+				debugController->EnableDebugLayer();
+				debugController->SetEnableGPUBasedValidation(true);
+
+				debugController->Release();
+
+				SA_LOG(L"Validation layer initialized.", Infos, SA/Render/DX12);
+			}
+			else
+				SA_LOG(L"Validation layer initialization failed.", Error, SA/Render/DX12);
+
+#endif // SA_DX12_VALIDATION_LAYERS
 		}
 
-		void ValidationLayers::Destroy()
+		void ValidationLayers::Uninitialize()
 		{
-			mDebugController->Release();
-			mDebugController = nullptr;
+#if SA_DX12_VALIDATION_LAYERS
 
-			SA_LOG(L"Validation layer destroyed.", Infos, SA/Render/DX12);
+			SA_LOG(L"Validation layer uninitialized.", Infos, SA/Render/DX12);
+
+#endif // SA_DX12_VALIDATION_LAYERS
 		}
 	}
 }
-
-#endif // SA_DX12_VALIDATION_LAYERS

@@ -5,27 +5,17 @@
 #ifndef SAPPHIRE_RENDER_DX12_VALIDATION_LAYERS_GUARD
 #define SAPPHIRE_RENDER_DX12_VALIDATION_LAYERS_GUARD
 
-#include <d3d12.h>
-
-#include "Debug/Debug.hpp"
-
-#if SA_DX12_VALIDATION_LAYERS
-
 namespace SA
 {
 	namespace DX12
 	{
 		class ValidationLayers
 		{
-			ID3D12Debug1* mDebugController = nullptr;
-
 		public:
-			void Create();
-			void Destroy();
+			static void Initialize();
+			static void Uninitialize();
 		};
 	}
 }
-
-#endif // SA_DX12_VALIDATION_LAYERS
 
 #endif // SAPPHIRE_RENDER_DX12_VALIDATION_LAYERS_GUARD

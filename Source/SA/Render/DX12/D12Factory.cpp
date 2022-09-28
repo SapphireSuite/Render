@@ -2,8 +2,7 @@
 
 #include "D12Factory.hpp"
 
-#include "Debug/Debug.hpp"
-#include "Debug/D12ValidationLayers.hpp"
+#include <Debug/Debug.hpp>
 
 namespace SA
 {
