@@ -2,8 +2,6 @@
 
 #include "D12ValidationLayers.hpp"
 
-#include <d3d12.h>
-
 #include <Debug/Debug.hpp>
 
 namespace SA
@@ -38,6 +36,82 @@ namespace SA
 			SA_LOG(L"Validation layer uninitialized.", Infos, SA/Render/DX12);
 
 #endif // SA_DX12_VALIDATION_LAYERS
+		}
+
+		void ValidationLayers::DebugCallback(D3D12_MESSAGE_CATEGORY _category,
+			D3D12_MESSAGE_SEVERITY _severity,
+			D3D12_MESSAGE_ID _ID,
+			LPCSTR _description,
+			void* _context)
+		{
+			(void)_context;
+
+			std::wstring categoryStr;
+
+			switch (_category)
+			{
+			case D3D12_MESSAGE_CATEGORY_APPLICATION_DEFINED:
+				categoryStr = L"[Application Defined]";
+				break;
+			case D3D12_MESSAGE_CATEGORY_MISCELLANEOUS:
+				categoryStr = L"[Miscellaneous]";
+				break;
+			case D3D12_MESSAGE_CATEGORY_INITIALIZATION:
+				categoryStr = L"[Initialization]";
+				break;
+			case D3D12_MESSAGE_CATEGORY_CLEANUP:
+				categoryStr = L"[Cleanup]";
+				break;
+			case D3D12_MESSAGE_CATEGORY_COMPILATION:
+				categoryStr = L"[Compilation]";
+				break;
+			case D3D12_MESSAGE_CATEGORY_STATE_CREATION:
+				categoryStr = L"[State Creation]";
+				break;
+			case D3D12_MESSAGE_CATEGORY_STATE_SETTING:
+				categoryStr = L"[State Setting]";
+				break;
+			case D3D12_MESSAGE_CATEGORY_STATE_GETTING:
+				categoryStr = L"[State Getting]";
+				break;
+			case D3D12_MESSAGE_CATEGORY_RESOURCE_MANIPULATION:
+				categoryStr = L"[Resource Manipulation]";
+				break;
+			case D3D12_MESSAGE_CATEGORY_EXECUTION:
+				categoryStr = L"[Category Execution]";
+				break;
+			case D3D12_MESSAGE_CATEGORY_SHADER:
+				categoryStr = L"[Category Shader]";
+				break;
+			default:
+				categoryStr = L"[Unknown]";
+				break;
+			}
+
+			switch (_severity)
+			{
+			case D3D12_MESSAGE_SEVERITY_CORRUPTION:
+				SA_LOG(_description, AssertFailure, SA/Render/DX12/ValidationLayers,
+					L"ID {" << static_cast<int>(_ID) << L"}\tCategory " << categoryStr);
+				break;
+			case D3D12_MESSAGE_SEVERITY_ERROR:
+				SA_LOG(_description, Error, SA/Render/DX12/ValidationLayers,
+					L"ID {" << static_cast<int>(_ID) << L"}\tCategory " << categoryStr);
+				break;
+			case D3D12_MESSAGE_SEVERITY_WARNING:
+				SA_LOG(_description, Warning, SA/Render/DX12/ValidationLayers,
+					L"ID {" << static_cast<int>(_ID) << L"}\tCategory " << categoryStr);
+				break;
+			case D3D12_MESSAGE_SEVERITY_INFO:
+				SA_LOG(_description, Infos, SA/Render/DX12/ValidationLayers,
+					L"ID {" << static_cast<int>(_ID) << L"}\tCategory " << categoryStr);
+				break;
+			case D3D12_MESSAGE_SEVERITY_MESSAGE:
+			default:
+				SA_LOG(_description, Normal, SA/Render/DX12/ValidationLayers,
+					L"ID {" << static_cast<int>(_ID) << L"}\tCategory " << categoryStr);
+				break;
+			}
 		}
 	}
 }
