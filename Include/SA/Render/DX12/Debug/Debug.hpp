@@ -9,6 +9,8 @@
 
 #include "Exception_DX12.hpp"
 
+#define SA_DX12_VALIDATION_LAYERS (SA_DEBUG || SA_LOG_RELEASE_OPT) && 1
+
 #define SA_DX12_ASSERT(_pred, ...) SA_ASSERT_EXEC(DX12, SA/Render/DX12, (_pred), ##__VA_ARGS__)
 
 #define SA_DX12_CREATE_LOG(_name, _handle)\

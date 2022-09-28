@@ -8,6 +8,7 @@
 #include <SA/Render/Base/ARenderInterface.hpp>
 
 #include "D12Factory.hpp"
+#include "Debug/D12ValidationLayers.hpp"
 #include "Device/D12Device.hpp"
 
 namespace SA
@@ -16,6 +17,8 @@ namespace SA
 	{
 		class RenderInterface : public ARenderInterface
 		{
+			ValidationLayers mValidationLayers;
+
 			Factory mFactory;
 		
 			HI::InterfaceList<Device> mDevices;

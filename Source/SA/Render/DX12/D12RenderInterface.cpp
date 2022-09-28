@@ -12,6 +12,8 @@ namespace SA
 		{
 			ARenderInterface::Create(_win_intf);
 
+			mValidationLayers.Create();
+
 			mFactory.Create();
 
 			SA_LOG(L"Render Interface created.", Infos, SA/Render/DX12);
@@ -22,6 +24,8 @@ namespace SA
 			ARenderInterface::Destroy();
 
 			mFactory.Destroy();
+
+			mValidationLayers.Destroy();
 
 			SA_LOG(L"Render Interface destroyed.", Infos, SA/Render/DX12);
 		}

@@ -3,6 +3,7 @@
 #include "D12Factory.hpp"
 
 #include "Debug/Debug.hpp"
+#include "Debug/D12ValidationLayers.hpp"
 
 namespace SA
 {
@@ -12,22 +13,10 @@ namespace SA
 		{
 			UINT dxgiFactoryFlags = 0;
 
-		#if SA_DEBUG
-
-			ID3D12Debug* debugController0 = nullptr;
-			SA_DX12_ASSERT(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController0)), L"Failed to query debug interface ID3D12Debug");
-
-			ID3D12Debug1* debugController1 = nullptr;
-			SA_DX12_ASSERT(debugController0->QueryInterface(IID_PPV_ARGS(&debugController1)), L"Failed to query interface ID3D12Debug1");
-
-			debugController0->EnableDebugLayer();
-			debugController1->SetEnableGPUBasedValidation(true);
+		#if SA_DX12_VALIDATION_LAYERS
 
 			// Enable additional debug layers.
 			dxgiFactoryFlags |= DXGI_CREATE_FACTORY_DEBUG;
-
-			debugController1->Release();
-			debugController0->Release();
 
 		#endif
 
