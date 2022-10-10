@@ -2,6 +2,10 @@
 
 #include "D12ValidationLayers.hpp"
 
+// Report live objects.
+#include <dxgi1_6.h>
+#include <DXGIDebug.h>
+
 #include <Debug/Debug.hpp>
 
 namespace SA
@@ -33,7 +37,18 @@ namespace SA
 		{
 #if SA_DX12_VALIDATION_LAYERS
 
-			SA_LOG(L"Validation layer uninitialized.", Infos, SA/Render/DX12);
+			// Report live objects
+			IDXGIDebug1* dxgiDebug = nullptr;
+
+			if (DXGIGetDebugInterface1(0, IID_PPV_ARGS(&dxgiDebug)) == S_OK)
+			{
+				dxgiDebug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_FLAGS(DXGI_DEBUG_RLO_ALL | DXGI_DEBUG_RLO_IGNORE_INTERNAL));
+				dxgiDebug->Release();
+				
+				SA_LOG(L"Validation layer uninitialized.", Infos, SA/Render/DX12);
+			}
+			else
+				SA_LOG(L"Validation layer uninitialized failed.", Error, SA/Render/DX12);
 
 #endif // SA_DX12_VALIDATION_LAYERS
 		}

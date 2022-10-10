@@ -99,7 +99,7 @@ if(SA_RENDER_DX12_OPT)
 	target_link_libraries(SA_Render_DX12
 		PUBLIC SA_Render_Base
 		PUBLIC d3d12.lib dxgi.lib # Set to public for easier wrapping.
-		PRIVATE
+		PRIVATE dxguid.lib
 	)
 
 	### Link to main lib.
